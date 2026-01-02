@@ -66,14 +66,18 @@ router.post('/signup', async (req, res, next) => {
     });
 
     // Generate JWT
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      throw new Error('JWT_SECRET is not configured');
+    }
     const token = jwt.sign(
       {
         userId: user.id,
         tenantId: user.tenantId,
         email: user.email
       },
-      process.env.JWT_SECRET as string,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+      secret,
+      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' } as jwt.SignOptions
     );
 
     res.status(201).json({
@@ -126,14 +130,18 @@ router.post('/signin', async (req, res, next) => {
     });
 
     // Generate JWT
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      throw new Error('JWT_SECRET is not configured');
+    }
     const token = jwt.sign(
       {
         userId: user.id,
         tenantId: user.tenantId,
         email: user.email
       },
-      process.env.JWT_SECRET as string,
-      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+      secret,
+      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' } as jwt.SignOptions
     );
 
     res.json({
