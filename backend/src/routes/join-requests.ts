@@ -191,7 +191,7 @@ router.post('/', async (req: AuthRequest, res, next) => {
             userId: ownerId,
             type: 'JOIN_REQUEST',
             title: 'New Join Request',
-            message: `${req.user!.name || req.user!.email} wants to join project "${project.name}"`,
+            message: `${joinRequest.user.name || joinRequest.user.email} wants to join project "${project.name}"`,
             projectId: project.id,
             joinRequestId: joinRequest.id,
             read: false

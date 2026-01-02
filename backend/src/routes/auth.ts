@@ -3,7 +3,7 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { z } from 'zod';
 import { prisma } from '../services/db.js';
-import { authenticate } from '../middleware/auth.js';
+import { authenticate, AuthRequest } from '../middleware/auth.js';
 
 const router = Router();
 
@@ -72,7 +72,7 @@ router.post('/signup', async (req, res, next) => {
         tenantId: user.tenantId,
         email: user.email
       },
-      process.env.JWT_SECRET!,
+      process.env.JWT_SECRET as string,
       { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
 
@@ -132,7 +132,7 @@ router.post('/signin', async (req, res, next) => {
         tenantId: user.tenantId,
         email: user.email
       },
-      process.env.JWT_SECRET!,
+      process.env.JWT_SECRET as string,
       { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
     );
 
@@ -151,7 +151,7 @@ router.post('/signin', async (req, res, next) => {
 });
 
 // Get current user
-router.get('/me', authenticate, async (req, res, next) => {
+router.get('/me', authenticate, async (req: AuthRequest, res, next) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user!.userId },
