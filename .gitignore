@@ -5,10 +5,4 @@ backend/.env
 backend/dist
 backend/prisma/migrations
 backend/prisma/client
-backend/prisma/schema.prisma
-backend/prisma/schema.prisma.bak
-backend/prisma/schema.prisma.bak.2
-backend/prisma/schema.prisma.bak.3
-backend/prisma/schema.prisma.bak.4
-backend/prisma/schema.prisma.bak.5
 documentations
